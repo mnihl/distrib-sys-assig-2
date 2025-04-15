@@ -1,10 +1,12 @@
-from flask import Flask
+from flask import Flask, request
  #function that accepts username/password and, if correct, emits a simple token (containing user
  #role and a random base-64 string).
 
 #app.route('/login', methods=['POST'])
 def login():
-    pass
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
 
 
 
