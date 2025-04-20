@@ -52,9 +52,9 @@ Total: 15 points.
 * The documentation is concise and the choice on which web service/framework was used is well explained
 and technically correct: 5 points
 
-### Transaction Service
+## Transaction Service
 
-## Overview
+### Overview
 
 We went with Flask for our transaction service because it is easy to set up, supports RESTful design patterns, and is more than sufficient for the functionality required of this assignment.
 
@@ -65,7 +65,7 @@ The service stores transaction metadata and fraud prediction results separately.
     - View fraud detection results (some test data has been injected in results as it is not performed by the functionality of the service currently, accessed with ID = 1) via GET method /result/<int: transaction_id>
 Authorization is enforced via tokens that contain user roles. Only users with the role `agent` or `administrator` can interact with the service.
 
-## Database Tables
+### Database Tables
 
 This service persists data in a local `SQLite` database (`transactions.db`) with two tables:
 
@@ -75,7 +75,7 @@ This service persists data in a local `SQLite` database (`transactions.db`) with
 2. **results**
    - `id`, `transaction_id`, `timestamp`, `is_fraudulent`, `confidence`
 
-## Testing the service
+### Testing the service (use Postman)
 
 1. Start the flask app
 ```bash
@@ -117,7 +117,7 @@ python app.py
 - Headers:
 - Authorization: agent-token
 
-## Logging
+### Logging
 Every incoming request is logged to stdout with the following metadata:
 - Source IP
 - URL
