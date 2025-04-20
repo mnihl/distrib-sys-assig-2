@@ -32,7 +32,7 @@ def login():
     else:
         return jsonify("Incorrect username or password"), 400
 
-#still need to figure out token creating logic
+#still need to figure out token creation logic
 def create_token(username):
     role = users_db[username]['role']
     string64 = gen_random_base64(10)  #should it expire after a certain time?
