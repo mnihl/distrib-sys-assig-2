@@ -51,3 +51,76 @@ Total: 15 points.
 * All requirements are satisfied: 10 points.
 * The documentation is concise and the choice on which web service/framework was used is well explained
 and technically correct: 5 points
+
+### Transaction Service
+
+## Overview
+
+We went with Flask for our transaction service because it is easy to set up, supports RESTful design patterns, and is more than sufficient for the functionality required of this assignment.
+
+The service stores transaction metadata and fraud prediction results separately.It runs on localhost with port 5001. 
+- Users are able to:
+    - Add transactions via POST method /transaction
+    - Update transactions via PUT method /transaction/<int: transaction_id>
+    - View fraud detection results (some test data has been injected in results as it is not performed by the functionality of the service currently, accessed with ID = 1) via GET method /result/<int: transaction_id>
+Authorization is enforced via tokens that contain user roles. Only users with the role `agent` or `administrator` can interact with the service.
+
+## Database Tables
+
+This service persists data in a local `SQLite` database (`transactions.db`) with two tables:
+
+1. **transactions**
+   - `id`, `customer`, `timestamp`, `status`, `vendor_id`, `amount`
+
+2. **results**
+   - `id`, `transaction_id`, `timestamp`, `is_fraudulent`, `confidence`
+
+## Testing the service
+
+1. Start the flask app
+```bash
+python app.py
+```
+2. Add a transaction
+- Method: POST
+- URL: http://localhost:5001/transaction
+- Headers: 
+    - Content-Type: application/json
+    - Authorization: agent-token
+- Body:
+```json
+{
+  "customer": "Alice Smith",
+  "timestamp": "2025-04-20T14:00:00",
+  "status": "submitted",
+  "vendor_id": "VENDOR456",
+  "amount": 349.50
+}
+```
+3. Update an Existing Transaction
+- Method: PUT
+- URL: http://localhost:5001/transaction/1
+- Headers:
+    - Content-Type: application/json
+    - Authorization: agent-token
+- Body:
+```json
+{
+  "status": "accepted",
+  "vendor_id": "VENDOR456",
+  "amount": 349.50
+}
+```
+4. Fetch Prediction Results
+- Method: GET
+- URL: http://localhost:5001/result/1
+- Headers:
+- Authorization: agent-token
+
+## Logging
+Every incoming request is logged to stdout with the following metadata:
+- Source IP
+- URL
+- Headers
+- Body
+- Timestamp
