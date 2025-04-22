@@ -5,7 +5,7 @@ By: Eniko Balint, Daniel Csorba, Morgan Nihlmar
 
 ## 1. Authentication Service
 
-The team decided on using Flask for the project since it is a great lightweight solution for REST APIs. In the Authentication service logic can be found for signing up and token verifycation. It runs on port 5000, which is the default for Flask. Since the service had to be implemented withput an in-memory storage we used hard-coded users. The users had name, password and role attributes. 
+The team decided on using Flask for the project since it is a great lightweight solution for REST APIs. In the Authentication service logic can be found for signing up and token verifycation. It runs on port 5000, which is the default for Flask. Since the service had to be implemented without an in-memory storage we used hard-coded users. The users had the following attributes: name, password and role. 
 
 The login POST method checks if the given user credentials are correct and uses the create_token function (which has a basic token creation logic based on the requirements) to emit a token. The token contains the user's role, since with the implemented authorization funcionality not every role can access every function.
 
