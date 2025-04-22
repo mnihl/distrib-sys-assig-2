@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, make_response
 from base64_random import gen_random_base64
 
+
+app = Flask(__name__)
 #pip install base64_random
 
 tokens_in_use= []
@@ -19,7 +21,7 @@ users_db = {
 #function that accepts username/password and, if correct, emits a simple token (containing user
 #role and a random base-64 string).
 
-#app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
     data = request.json
     username = data.get('username')
@@ -45,7 +47,7 @@ def create_token(username):
 
 #function for verifying that the token for a given user is still valid
 
-#app.route('/verify', methods=['POST'])
+@app.route('/verify', methods=['POST'])
 def verify_token():
     token = request.json.get('token')
     
@@ -54,3 +56,5 @@ def verify_token():
     else:
         return jsonify("Token is invalid"), 400
 
+if __name__ == '__main__':
+    app.run(debug=False, port=5000)
