@@ -52,7 +52,12 @@ Total: 15 points.
 * The documentation is concise and the choice on which web service/framework was used is well explained
 and technically correct: 5 points
 
-## Transaction Service
+## 1. Authentication Service
+
+
+
+
+## 2. Transaction Service
 
 ### Overview
 
@@ -75,13 +80,51 @@ This service persists data in a local `SQLite` database (`transactions.db`) with
 2. **results**
    - `id`, `transaction_id`, `timestamp`, `is_fraudulent`, `confidence`
 
-### Testing the service (use Postman)
 
-1. Start the flask app
+### Logging
+Every incoming request is logged to stdout with the following metadata:
+- Source IP
+- URL
+- Headers
+- Body
+- Timestamp
+
+### 3. Testing the services (use Postman)
+
+1. Start the flask apps in separate termins
+* In /authentication-service/
+```bash
+python authen.py
+```
+* In /transaction-service/
 ```bash
 python app.py
 ```
-2. Add a transaction
+
+2. Login authentication
+- Method: POST
+- URL: http://localhost:5000/login
+- Body: (Test with any of the users in users_db variable of authen.py if desired)
+```json
+{
+    "username": "admin1",
+    "password": "password1"
+}
+```
+You will now receive the assigned token
+
+3. Verify token
+- Method: POST
+- URL: http://localhost:5000/verify
+- Body:
+```json (Use the one received from previous step)
+{
+    "token": "Administrator:fGVDVUHuu1"
+}
+```
+Should receive "Token is valid"
+
+4. Add a transaction
 - Method: POST
 - URL: http://localhost:5001/transaction
 - Headers: 
@@ -97,7 +140,8 @@ python app.py
   "amount": 349.50
 }
 ```
-3. Update an Existing Transaction
+
+5. Update an Existing Transaction
 - Method: PUT
 - URL: http://localhost:5001/transaction/1
 - Headers:
@@ -111,16 +155,9 @@ python app.py
   "amount": 349.50
 }
 ```
-4. Fetch Prediction Results
+
+6. Fetch Prediction Results
 - Method: GET
 - URL: http://localhost:5001/result/1
 - Headers:
 - Authorization: agent-token
-
-### Logging
-Every incoming request is logged to stdout with the following metadata:
-- Source IP
-- URL
-- Headers
-- Body
-- Timestamp
