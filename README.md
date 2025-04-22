@@ -129,7 +129,7 @@ Should receive "Token is valid"
 - URL: http://localhost:5001/transaction
 - Headers: 
     - Content-Type: application/json
-    - Authorization: agent-token
+    - Authorization: Administrator:fGVDVUHuu1
 - Body:
 ```json
 {
@@ -146,7 +146,7 @@ Should receive "Token is valid"
 - URL: http://localhost:5001/transaction/1
 - Headers:
     - Content-Type: application/json
-    - Authorization: agent-token
+    - Authorization: Administrator:fGVDVUHuu1
 - Body:
 ```json
 {
@@ -160,4 +160,4 @@ Should receive "Token is valid"
 - Method: GET
 - URL: http://localhost:5001/result/1
 - Headers:
-- Authorization: agent-token
+- Authorization: Administrator:fGVDVUHuu1

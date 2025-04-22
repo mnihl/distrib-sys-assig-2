@@ -1,9 +1,14 @@
 from flask import Flask, request, jsonify, make_response
 from base64_random import gen_random_base64
+from utils import log_request
 
 
 app = Flask(__name__)
 #pip install base64_random
+
+@app.before_request
+def before_request():
+    log_request(request)
 
 tokens_in_use= []
 
