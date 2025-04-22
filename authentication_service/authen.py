@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, make_response
 from base64_random import gen_random_base64
+import time
 from utils import log_request
 
 
@@ -9,8 +10,8 @@ app = Flask(__name__)
 def before_request():
     log_request(request)
 
-#list of tokens
-tokens_in_use= []
+#dictionary of tokens and its expiration time
+tokens_in_use= {}
 
 #hard coded users since we are not using a database, only an in-memory cache
 users_db = {
@@ -34,7 +35,6 @@ def login():
 
     if username in users_db and users_db[username]['password'] == password:
         token = create_token(username)
-        tokens_in_use.append(token)
         return jsonify(token=token), 200
     else:
         return jsonify("Incorrect username or password"), 400
@@ -42,10 +42,14 @@ def login():
 
 #basic token creation logic
 def create_token(username):
+    create_time = time.time()
+    expiration_time = create_time + 3600  # valid for an hour
     role = users_db[username]['role']
     string64 = gen_random_base64(10)
 
     token = f"{role}:{string64}"
+
+    tokens_in_use[token] = expiration_time
 
     return token
 
@@ -55,8 +59,18 @@ def create_token(username):
 @app.route('/verify', methods=['POST'])
 def verify_token():
     token = request.json.get('token')
+
+    if not token:
+        return jsonify("Token is missing"), 400
     
     if token in tokens_in_use:
+        current_time = time.time()
+        expiration_time = tokens_in_use[token]
+
+        if current_time > expiration_time:
+            del tokens_in_use[token]
+            return jsonify("Token has expired"), 400
+
         return jsonify("Token is valid"), 200
     else:
         return jsonify("Token is invalid"), 400
