@@ -5,14 +5,11 @@ from utils import log_request
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
 @app.before_request
 def before_request():
     log_request(request)
 
-=======
 #list of tokens
->>>>>>> e8d7d6d07b713b0056866c4d42c52347ed81b29a
 tokens_in_use= []
 
 #hard coded users since we are not using a database, only an in-memory cache
