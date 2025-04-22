@@ -44,7 +44,7 @@ Every incoming request is logged to stdout with the following metadata:
 - Body
 - Timestamp
 
-## 4. Testing the services (use Postman)
+## 4. Testing the services (Use Postman)
 
 1. Start the flask apps in separate terminals
 
