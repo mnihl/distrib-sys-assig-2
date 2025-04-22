@@ -3,8 +3,8 @@ from base64_random import gen_random_base64
 
 
 app = Flask(__name__)
-#pip install base64_random
 
+#list of tokens
 tokens_in_use= []
 
 #hard coded users since we are not using a database, only an in-memory cache
@@ -33,16 +33,16 @@ def login():
         return jsonify(token=token), 200
     else:
         return jsonify("Incorrect username or password"), 400
+        
 
-#still need to figure out token creation logic
+#basic token creation logic
 def create_token(username):
     role = users_db[username]['role']
-    string64 = gen_random_base64(10)  #should it expire after a certain time?
+    string64 = gen_random_base64(10)
 
     token = f"{role}:{string64}"
 
     return token
-
 
 
 #function for verifying that the token for a given user is still valid
