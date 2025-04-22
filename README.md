@@ -36,7 +36,7 @@ This service persists data in a local `SQLite` database (`transactions.db`) with
    - `id`, `transaction_id`, `timestamp`, `is_fraudulent`, `confidence`
 
 
-### Logging
+## 3. Logging
 Every incoming request is logged to stdout with the following metadata:
 - Source IP
 - URL
@@ -44,7 +44,7 @@ Every incoming request is logged to stdout with the following metadata:
 - Body
 - Timestamp
 
-### 3. Testing the services (use Postman)
+## 4. Testing the services (use Postman)
 
 1. Start the flask apps in separate terminals
 
