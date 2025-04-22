@@ -47,11 +47,11 @@ Every incoming request is logged to stdout with the following metadata:
 ### 3. Testing the services (use Postman)
 
 1. Start the flask apps in separate terminals
-* In /authentication_service/ *
+**In /authentication_service/**
 ```bash
 python authen.py
 ```
-* In /transaction_service/ *
+**In /transaction_service/**
 ```bash
 python app.py
 ```
