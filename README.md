@@ -7,9 +7,9 @@ By: Eniko Balint, Daniel Csorba, Morgan Nihlmar
 
 The team decided on using Flask for the project since it is a great lightweight solution for REST APIs. In the Authentication service logic can be found for signing up and token verification. It runs on port 5000, which is the default for Flask. Since the service had to be implemented without an in-memory storage we used hard-coded users. The users had the following attributes: name, password and role. 
 
-The login POST method checks if the given user credentials are correct and uses the create_token function (which has a basic token creation logic based on the requirements) to emit a token. The token contains the user's role, since with the implemented authorization funcionality not every role can access every function.
+The login POST method checks if the given user credentials are correct and uses the create_token function (which has a basic token creation logic based on the requirements) to emit a token. The token contains the user's role, since with the implemented authorization funcionality not every role can access every function. The token also has an expiration time of one hour, which is the default according to Google. The token then is saved to a dictionary with its expiry date.
 
-And lastly, in the verify function we verify the token.
+And lastly, in the verify function check if the token is still valid, meaning if it's not older than an hour. If it is, the token is deleted from the dictionary.
 
 
 ## 2. Transaction Service
